@@ -10,5 +10,7 @@ export default function() {
 
   const filenames = program.args;
 
-  import("..").then(main => main.default(filenames));
+  import("..").then(main => {
+    main.default(filenames);
+  });
 }
