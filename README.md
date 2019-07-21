@@ -4,7 +4,7 @@
 
 # MY PRACTICE FOR WORKER THREADS AND PRETTIER
 
-[Prettier](https://github.com/prettier/prettier) runs with [Worker Threads](https://nodejs.org/api/worker_threads.html).
+Runs [Prettier](https://github.com/prettier/prettier) with [Worker Threads](https://nodejs.org/api/worker_threads.html).
 
 ## Install
 
