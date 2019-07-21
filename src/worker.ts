@@ -1,14 +1,25 @@
-import prettier from "prettier";
+import prettier, { getFileInfo } from "prettier";
 import { workerData, parentPort } from "worker_threads";
+import { readFileSync, writeFileSync } from "fs";
 
-async function format({ text, parser }: { text: string; parser: string }) {
-  const formattedText = prettier.format(text, {
-    parser: parser as any
-  });
+const { filename } = workerData;
 
+const { ignored, inferredParser } = getFileInfo.sync(filename);
+
+if (ignored && !inferredParser) {
   if (parentPort) {
-    parentPort.postMessage(formattedText);
+    parentPort.close();
   }
 }
 
-format(workerData);
+const text = readFileSync(filename, "utf8");
+
+const formattedText = prettier.format(text, {
+  parser: inferredParser as any
+});
+
+writeFileSync(filename, formattedText);
+
+if (parentPort) {
+  parentPort.postMessage({ text, formattedText });
+}
