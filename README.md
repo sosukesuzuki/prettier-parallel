@@ -2,7 +2,7 @@
 
 # DOES NOT IMPROVE PERFORMANCE
 
-# PRACTICE FOR WORKER THREADS AND PRETTIER
+# MY PRACTICE FOR WORKER THREADS AND PRETTIER
 
 [Prettier](https://github.com/prettier/prettier) runs with [Worker Threads](https://nodejs.org/api/worker_threads.html).
 
