@@ -1,28 +1,14 @@
 import prettier from "prettier";
-import colors from "colors/safe";
-import { workerData } from "worker_threads";
-import readFile from "./fs/readFile";
-import writeFile from "./fs/writeFile";
-import { performance } from "perf_hooks";
+import { workerData, parentPort } from "worker_threads";
 
-async function format(filename: string) {
-  const start = performance.now();
-
-  const { ignored, inferredParser } = await prettier.getFileInfo(filename);
-  if (ignored || !inferredParser) {
-    return;
-  }
-  const text = await readFile(filename);
+async function format({ text, parser }: { text: string; parser: string }) {
   const formattedText = prettier.format(text, {
-    parser: inferredParser as any
+    parser: parser as any
   });
 
-  await writeFile(filename, formattedText);
-
-  console.log(
-    text === formattedText ? colors.gray(filename) : filename,
-    `${Math.round(performance.now() - start)}ms`
-  );
+  if (parentPort) {
+    parentPort.postMessage(formattedText);
+  }
 }
 
-format(workerData.filename);
+format(workerData);
