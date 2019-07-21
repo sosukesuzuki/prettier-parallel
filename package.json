@@ -7,6 +7,11 @@
   },
   "license": "MIT",
   "author": "Sosuke Suzuki <aosukeke@gmail.com>",
+  "files": [
+    "build/**/*",
+    "bin/**/*",
+    "!src/**/*"
+  ],
   "bin": "./bin/prettier-prallel.js",
   "scripts": {
     "build": "yarn clean && tsc",
