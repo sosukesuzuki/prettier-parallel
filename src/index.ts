@@ -1,5 +1,5 @@
 import program from "commander";
-import formatWithWorker from "./formatWithWorker";
+import createWorker from "./createWorker";
 
 export function run() {
   program
@@ -8,6 +8,6 @@ export function run() {
     .parse(process.argv);
 
   for (let i = 0; i < program.args.length; i++) {
-    formatWithWorker(program.args[i]);
+    createWorker(program.args[i]);
   }
 }
