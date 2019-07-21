@@ -19,7 +19,11 @@ function formatWithWorker(filename: string) {
 export default async function(filenames: string[]) {
   await Promise.all(
     filenames.map(async filename => {
-      await formatWithWorker(filename);
+      try {
+        await formatWithWorker(filename);
+      } catch (error) {
+        throw error;
+      }
     })
   );
 }
