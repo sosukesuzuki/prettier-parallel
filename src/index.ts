@@ -1,5 +1,5 @@
 import program from "commander";
-import main from "./main";
+import formatWithWorker from "./formatWithWorker";
 
 export function run() {
   program
@@ -7,9 +7,5 @@ export function run() {
     .arguments("<filename>")
     .parse(process.argv);
 
-  if (program.args.length === 0) return;
-
-  const filenames = program.args;
-
-  main(filenames);
+  program.args.map(filename => formatWithWorker(filename));
 }
