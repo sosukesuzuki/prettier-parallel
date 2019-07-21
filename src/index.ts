@@ -17,7 +17,9 @@ function formatWithWorker(filename: string) {
 }
 
 export default async function(filenames: string[]) {
-  filenames.forEach(filename => {
-    formatWithWorker(filename);
-  });
+  await Promise.all(
+    filenames.map(async filename => {
+      await formatWithWorker(filename);
+    })
+  );
 }
