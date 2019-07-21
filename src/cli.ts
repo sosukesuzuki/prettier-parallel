@@ -1,6 +1,7 @@
 import program from "commander";
+import main from "./main";
 
-export default function() {
+export function run() {
   program
     .version("1.0.0")
     .arguments("<filename>")
@@ -10,7 +11,5 @@ export default function() {
 
   const filenames = program.args;
 
-  import("..").then(main => {
-    main.default(filenames);
-  });
+  main(filenames);
 }
