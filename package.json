@@ -15,8 +15,8 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "dependencies": {
-    "prettier": "^1.18.2"
+  "peerDependencies": {
+    "prettier": ">=1.8.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
@@ -26,6 +26,7 @@
     "pretty-quick": "^1.11.1",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "prettier": "^1.18.2"
   }
 }
