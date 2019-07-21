@@ -8,7 +8,7 @@ import { performance } from "perf_hooks";
 
 async function formatWithWorker(text: string, parser: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    const worker = new Worker(path.join(__dirname, "./lib/formatWorker.js"), {
+    const worker = new Worker(path.join(__dirname, "./worker.js"), {
       workerData: { text, parser }
     });
 
