@@ -7,5 +7,7 @@ export function run() {
     .arguments("<filename>")
     .parse(process.argv);
 
-  program.args.map(filename => formatWithWorker(filename));
+  for (let i = 0; i < program.args.length; i++) {
+    formatWithWorker(program.args[i]);
+  }
 }
