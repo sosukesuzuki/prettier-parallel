@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "Sosuke Suzuki <aosukeke@gmail.com>",
-  "main": "index.js",
+  "bin": "./bin/prettier-prallel.js",
   "scripts": {
     "build": "yarn clean && tsc",
     "build:watch": "yarn build --watch",
