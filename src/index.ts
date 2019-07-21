@@ -1,12 +1,23 @@
-import { Worker, isMainThread, parentPort } from "worker_threads";
+import path from "path";
+import { Worker } from "worker_threads";
 
-if (isMainThread) {
-  const worker = new Worker(__filename);
-  worker.on("message", (msg: string) => {
-    console.log(msg);
+function formatWithWorker(filename: string) {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker(path.join(__dirname, "./lib/formatWorker.js"), {
+      workerData: { filename }
+    });
+    worker.on("message", resolve);
+    worker.on("error", reject);
+    worker.on("exit", (code: number) => {
+      if (code !== 0) {
+        reject(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
   });
-} else {
-  if (parentPort) {
-    parentPort.postMessage("Hello world!");
-  }
+}
+
+export default async function(filenames: string[]) {
+  filenames.forEach(filename => {
+    formatWithWorker(filename);
+  });
 }
