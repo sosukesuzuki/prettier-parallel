@@ -1,4 +1,5 @@
 import prettier, { getFileInfo } from "prettier";
+import colors from "colors/safe";
 import { workerData, parentPort } from "worker_threads";
 import { readFileSync, writeFileSync } from "fs";
 
@@ -6,9 +7,10 @@ const { filename } = workerData;
 
 const { ignored, inferredParser } = getFileInfo.sync(filename);
 
-if (ignored && !inferredParser) {
+if (ignored || !inferredParser) {
   if (parentPort) {
-    parentPort.close();
+    console.warn(colors.gray(`${filename} could not be formatted`));
+    process.exit();
   }
 }
 
@@ -22,4 +24,5 @@ writeFileSync(filename, formattedText);
 
 if (parentPort) {
   parentPort.postMessage({ text, formattedText });
+  process.exit();
 }

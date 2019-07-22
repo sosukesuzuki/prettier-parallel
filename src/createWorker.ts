@@ -19,6 +19,14 @@ export default function(filename: string): void {
     }
   );
 
+  worker.on("close", () => {
+    console.log("closed!");
+  });
+
+  worker.on("error", (err: Error) => {
+    throw err;
+  });
+
   worker.on("exit", (code: number) => {
     if (code !== 0) {
       throw new Error(`Worker stopped with exit code ${code}`);
