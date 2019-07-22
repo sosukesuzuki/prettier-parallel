@@ -19,10 +19,6 @@ export default function(filename: string): void {
     }
   );
 
-  worker.on("close", () => {
-    console.log("closed!");
-  });
-
   worker.on("error", (err: Error) => {
     throw err;
   });
