@@ -1,22 +1,15 @@
 import glob from "glob";
 import createWorker from "./createWorker";
+import { promisify } from "util";
+import createIgnore from "./createIgnore";
 
 function isVersionCheck(arg: string): boolean {
   return arg === "--version" || arg === "-v";
 }
 
-function runGlob(pattern: string): Promise<string[]> {
-  return new Promise((resolve, reject) => {
-    glob(pattern, (err, matches) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(matches);
-    });
-  });
-}
+const runGlob = promisify(glob);
 
-export function run(args: string[]) {
+export async function run(args: string[]) {
   if (args.length === 0) {
     process.exit();
   }
@@ -26,19 +19,23 @@ export function run(args: string[]) {
     process.exit();
   }
 
-  runGlob(args[0])
-    .then(files => {
-      if (files.length === 0) {
-        console.log(`There are no files matched to ${args[0]}`);
-        process.exit();
-      }
+  try {
+    const files = await runGlob(args[0]);
 
-      for (let i = 0; i < files.length; i++) {
-        createWorker(files[i]);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      process.exit(1);
-    });
+    if (files.length === 0) {
+      console.log(`There are no files matched to ${args[0]}`);
+      process.exit();
+    }
+
+    const rootIgnore = await createIgnore(process.cwd());
+
+    const targetFiles = files.filter(rootIgnore);
+
+    for (let i = 0; i < targetFiles.length; i++) {
+      createWorker(targetFiles[i]);
+    }
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
 }
