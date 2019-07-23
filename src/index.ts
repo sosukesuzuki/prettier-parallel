@@ -1,5 +1,5 @@
 import glob from "glob";
-// import createWorker from "./createWorker";
+import createWorker from "./createWorker";
 
 function isVersionCheck(arg: string): boolean {
   return arg === "--version" || arg === "-v";
@@ -32,16 +32,13 @@ export function run(args: string[]) {
         console.log(`There are no files matched to ${args[0]}`);
         process.exit();
       }
+
+      for (let i = 0; i < files.length; i++) {
+        createWorker(files[i]);
+      }
     })
     .catch(err => {
       console.error(err);
       process.exit(1);
     });
-
-  // program.version("1.0.0").parse(process.argv);
-
-  // for (let i = 0; i < program.args.length; i++) {
-  //   createWorker(program.args[i]);
-
-  // }
 }
