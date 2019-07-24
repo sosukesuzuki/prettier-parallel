@@ -1,4 +1,4 @@
-import prettier, { getFileInfo } from "prettier";
+import prettier, { getFileInfo, resolveConfig } from "prettier";
 import colors from "colors/safe";
 import { workerData, parentPort } from "worker_threads";
 import { readFileSync, writeFileSync } from "fs";
@@ -29,8 +29,11 @@ if (!inferredParser) {
 
 const text = readFileSync(filename, "utf8");
 
+const options = resolveConfig.sync(filename);
+
 const formattedText = prettier.format(text, {
-  parser: inferredParser as any
+  parser: inferredParser as any,
+  ...options
 });
 
 writeFileSync(filename, formattedText);
