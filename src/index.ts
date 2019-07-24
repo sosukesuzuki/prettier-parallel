@@ -1,13 +1,10 @@
-import glob from "glob";
+import globby from "globby";
 import createWorker from "./createWorker";
-import { promisify } from "util";
 import createIgnore from "./createIgnore";
 
 function isVersionCheck(arg: string): boolean {
   return arg === "--version" || arg === "-v";
 }
-
-const runGlob = promisify(glob);
 
 export async function run(args: string[]) {
   if (args.length === 0) {
@@ -20,7 +17,7 @@ export async function run(args: string[]) {
   }
 
   try {
-    const files = await runGlob(args[0]);
+    const files = globby.sync(args, { dot: true });
 
     if (files.length === 0) {
       console.log(`There are no files matched to ${args[0]}`);
