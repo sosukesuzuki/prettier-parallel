@@ -1,17 +1,19 @@
 import globby from "globby";
+import minimist from "minimist";
 import createWorker from "./createWorker";
 import createIgnore from "./createIgnore";
-
-function isVersionCheck(arg: string): boolean {
-  return arg === "--version" || arg === "-v";
-}
 
 export function run(args: string[]) {
   if (args.length === 0) {
     process.exit();
   }
 
-  if (isVersionCheck(args[0])) {
+  const options = minimist(args);
+
+  const isVersionCheck = options.version || options.v;
+  const ignorePath = options["ignore-path"];
+
+  if (isVersionCheck) {
     console.log("1.0.0");
     process.exit();
   }
@@ -20,11 +22,11 @@ export function run(args: string[]) {
     const files = globby.sync(args, { dot: true });
 
     if (files.length === 0) {
-      console.log(`There are no files matched to ${args[0]}`);
+      console.log(`There are no files matched to ${files[0]}`);
       process.exit();
     }
 
-    const rootIgnore = createIgnore(process.cwd());
+    const rootIgnore = createIgnore(process.cwd(), ignorePath);
 
     const targetFiles = files.filter(rootIgnore);
 
