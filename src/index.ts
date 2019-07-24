@@ -6,7 +6,7 @@ function isVersionCheck(arg: string): boolean {
   return arg === "--version" || arg === "-v";
 }
 
-export async function run(args: string[]) {
+export function run(args: string[]) {
   if (args.length === 0) {
     process.exit();
   }
@@ -24,7 +24,7 @@ export async function run(args: string[]) {
       process.exit();
     }
 
-    const rootIgnore = await createIgnore(process.cwd());
+    const rootIgnore = createIgnore(process.cwd());
 
     const targetFiles = files.filter(rootIgnore);
 
