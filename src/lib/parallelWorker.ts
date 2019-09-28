@@ -10,7 +10,7 @@ const { files, options = {} } = workerData as {
     options: Options;
 };
 
-console.log('Start', threadId);
+console.log('Start thread ', threadId);
 
 Promise.all(
     files.map(async filePath => {
@@ -33,7 +33,7 @@ Promise.all(
     }),
 )
     .then(() => {
-        console.log('Finish ', threadId);
+        console.log('Finish thread ', threadId);
     })
     .catch(() => {
         process.exitCode = 1;
