@@ -6,6 +6,11 @@
     "author": "Sosuke Suzuki <aosukeke@gmail.com>",
     "license": "MIT",
     "bin": "bin/prettier-parallel.js",
+    "files": [
+        "build/**/*",
+        "bin/**/*",
+        "!src/**/*"
+    ],
     "scripts": {
         "lint": "eslint src --ext ts",
         "build": "tsc",
