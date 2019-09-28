@@ -1,9 +1,14 @@
 import { cpus } from 'os';
 import { Worker } from 'worker_threads';
+import { Options } from 'prettier';
 
 const workerPath = require.resolve('./parallelWorker');
 
-export function formatInParallel(files: string[], concurrency = cpus().length) {
+export function formatInParallel(
+    files: string[],
+    options: Options,
+    concurrency = cpus().length,
+) {
     const chunkSize = Math.max(32, Math.ceil(files.length / concurrency));
     const promises = [];
     for (let i = 0; i < files.length; i += chunkSize) {
@@ -11,6 +16,7 @@ export function formatInParallel(files: string[], concurrency = cpus().length) {
             new Promise((resolve, reject) => {
                 const workerData = {
                     files: files.slice(i, i + chunkSize),
+                    options,
                 };
 
                 const worker = new Worker(workerPath, { workerData });
