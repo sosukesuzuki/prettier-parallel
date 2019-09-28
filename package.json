@@ -1,6 +1,6 @@
 {
     "name": "prettier-parallel",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "main": "index.js",
     "repository": "ssh://git@github.com/sosukesuzuki/prettier-parallel.git",
     "author": "Sosuke Suzuki <aosukeke@gmail.com>",
