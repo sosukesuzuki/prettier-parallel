@@ -22,7 +22,7 @@ export function formatInParallel(
                 const worker = new Worker(workerPath, { workerData });
 
                 worker.on('message', ({ filePath }) => {
-                    // Done
+                    console.log('Done ', filePath);
                 });
                 worker.on('error', reject);
                 worker.on('exit', exitCode => {
