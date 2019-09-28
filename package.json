@@ -5,6 +5,7 @@
     "repository": "ssh://git@github.com/sosukesuzuki/prettier-parallel.git",
     "author": "Sosuke Suzuki <aosukeke@gmail.com>",
     "license": "MIT",
+    "bin": "bin/prettier-parallel.js",
     "scripts": {
         "lint": "eslint src --ext ts",
         "build": "tsc",
