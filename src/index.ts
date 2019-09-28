@@ -1,3 +1,5 @@
-export function run(args: string[]) {
-    console.log('HELLO');
+import { glob } from './lib';
+
+export async function run() {
+    const files = await glob(process.cwd());
 }
