@@ -1,0 +1,44 @@
+{
+    "name": "prettier-parallel",
+    "version": "1.0.2",
+    "main": "index.js",
+    "repository": "ssh://git@github.com/sosukesuzuki/prettier-parallel.git",
+    "author": "Sosuke Suzuki <aosukeke@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "lint": "eslint src --ext ts",
+        "build": "tsc",
+        "build:watch": "yarn build --watch"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{ts}": [
+            "eslint --fix",
+            "git add"
+        ],
+        "*.{md,json}": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "peerDependencies": {
+        "prettier": "^1.18.2"
+    },
+    "devDependencies": {
+        "@types/node": "^12.7.8",
+        "@types/prettier": "^1.18.2",
+        "@typescript-eslint/eslint-plugin": "^2.3.1",
+        "@typescript-eslint/parser": "^2.3.1",
+        "eslint": "^6.4.0",
+        "eslint-config-prettier": "^6.3.0",
+        "eslint-plugin-prettier": "^3.1.1",
+        "husky": "^3.0.7",
+        "lint-staged": "^9.4.0",
+        "prettier": "^1.18.2",
+        "typescript": "^3.6.3"
+    }
+}
