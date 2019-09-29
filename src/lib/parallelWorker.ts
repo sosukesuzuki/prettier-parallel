@@ -23,7 +23,7 @@ Promise.all(
         const text = await readFile(filePath, 'utf8');
         const result = format(
             text,
-            Object.assign({ parser: inferredParser as any }, options),
+            Object.assign({ parser: inferredParser }, options),
         );
         await writeFile(filePath, result);
 
