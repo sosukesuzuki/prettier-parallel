@@ -21,10 +21,10 @@ Promise.all(
         }
 
         const text = await readFile(filePath, 'utf8');
-        const result = format(text, {
-            parser: inferredParser as any,
-            ...options,
-        });
+        const result = format(
+            text,
+            Object.assign({ parser: inferredParser as any }, options),
+        );
         await writeFile(filePath, result);
 
         if (parentPort) {
